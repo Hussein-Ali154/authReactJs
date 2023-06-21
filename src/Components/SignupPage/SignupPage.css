@@ -1,0 +1,122 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('./background.jpg');
+  background-size:cover;
+  background-position: center;
+}
+
+.signup-form {
+  width: 30%;
+  height: 85%;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.signup-form h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+
+
+}
+.signup-form label {
+  display: block;
+  margin-bottom: 10px ;
+  text-align: left;
+
+
+}
+
+.signup-form input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 27rem;
+  
+}
+.signup-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.signup-options button {
+  display: flex;
+  align-items: center;
+  width: 48%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.create-account{
+  display: block;
+  margin: 0 auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.signup-facebook {
+  background-color: #3b5998;
+  color: white;
+}
+.signup-gmail {
+  background-color: #db4437;
+  color: white;
+}
+.signup-facebook img, .signup-gmail img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+.signup-form button,.create-account:hover {
+  opacity: 0.8;
+}
+
+.p-style{
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #2c2a2a;
+
+}
+
+
+button:hover {
+background-color: #0069d9;
+}
+
+.login-link {
+  margin-top: 1rem;
+  font-size: 15px;
+  text-align: center;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+  color: #0069d9;
+}
