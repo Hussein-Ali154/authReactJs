@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/authReactJs/static/css/main.ef0403df.css",
+    "main.js": "/authReactJs/static/js/main.ac5f3819.js",
+    "static/js/787.0bca8be2.chunk.js": "/authReactJs/static/js/787.0bca8be2.chunk.js",
+    "static/media/background.jpg": "/authReactJs/static/media/background.6d999908f8207fdeb203.jpg",
+    "static/media/background.jpeg": "/authReactJs/static/media/background.182479cd8da9a04bb962.jpeg",
+    "static/media/gmail-logo.svg": "/authReactJs/static/media/gmail-logo.29ac350df92c649ab87525a839df486e.svg",
+    "static/media/facebook-logo.svg": "/authReactJs/static/media/facebook-logo.200088d89517845e158d5d2ebabbd6a7.svg",
+    "index.html": "/authReactJs/index.html",
+    "main.ef0403df.css.map": "/authReactJs/static/css/main.ef0403df.css.map",
+    "main.ac5f3819.js.map": "/authReactJs/static/js/main.ac5f3819.js.map",
+    "787.0bca8be2.chunk.js.map": "/authReactJs/static/js/787.0bca8be2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ef0403df.css",
+    "static/js/main.ac5f3819.js"
+  ]
+}
