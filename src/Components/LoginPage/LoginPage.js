@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import axios from 'axios'
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError]=useState(null);
+  const history=useHistory();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle login logic here
-    axios.post(
-      'https://graduactionproject-backend.onrender.com/api/v1/auth/login',
-      {  email, password },
-        
-        ).then(Response=>{console.log(Response.data)})
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+  
       
-        
-        .catch(error => {
-          // handle error
-          console.log(error);
-        });
-        // window.location.href='/Login';// المفروض تروح للهووووومم
-        console.log("Success");
+      try {
+        const response = await axios.post('https://graduactionproject-backend.onrender.com/api/v1/auth/login', { email, password });
+        localStorage.setItem('token', response.data.token);
+        history.push('/dashboard');
+      } catch (error) {
+        setError('Invalid email or password');
       }
+    };
+
 
   
 
@@ -39,6 +39,7 @@ function LoginPage() {
             placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            required
           />
         </div>
         <div className="form-group">
@@ -50,14 +51,16 @@ function LoginPage() {
             placeholder="Password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            required
           />
         </div>
         <div className="forgot-password-link">
-          <a href="forget">Forgot password?</a>
+        <Link to="/forgot">ForgetPassword</Link>
         </div>
+        {error && <p>{error}</p>}
         <button type="submit" className="login">Login</button>
-      <div className="register-link">
-      Don't have an account? <a href="/">Register</a>
+        <div className="register-link">
+        Don't have an account? <Link to ="/">Register</Link>
           </div>
       </form>
     </div>

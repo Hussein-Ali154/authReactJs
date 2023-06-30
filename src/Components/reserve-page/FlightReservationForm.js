@@ -5,7 +5,6 @@ import "./FlightReservationForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
-
 const countries = [
   "United States",
   "United Kingdom",
@@ -372,6 +371,7 @@ const FlightReservationForm = (props) => {
 
     if (Object.keys(errors).length === 0) {
       // Submit form data
+      
     } else {
       setErrors(errors);
     }
@@ -415,7 +415,6 @@ const FlightReservationForm = (props) => {
           <div className="row">
             <div className="col">
               <label htmlFor="dateOfBirth">Date of Birth</label>
-              <br />
               <DatePicker
                 selected={dateOfBirth}
                 onChange={(date) => setDateOfBirth(date)}
@@ -494,7 +493,6 @@ const FlightReservationForm = (props) => {
             </div>
             <div className="col">
               <label htmlFor="passengers">Passengers:</label>
-              <br />
               <select
                 value={passengers}
                 onChange={handlePassengerChange}
@@ -689,7 +687,6 @@ const FlightReservationForm = (props) => {
           <div className="row">
             <div className="col">
               <label htmlFor="airline">Airline:</label>
-              <br />
               <select
                 value={airlinePreference}
                 onChange={handleAirlineChange}

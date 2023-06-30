@@ -4,35 +4,42 @@ import "./SignupPage.css";
 import facebookIcon from "./facebook-logo.svg";
 import googleIcon from "./gmail-logo.svg";
 import axios from 'axios'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 function SignupPage() {
-
+  const [name, setname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error,setError]=useState(null);
+  const  history = useHistory();
+  const handleFacebookSignup = () => {window.location.href = "https://www.facebook.com/"; }
+  const handleGoogleSignup = () => {window.location.href = "https://www.google.com/accounts";};
   
-  function handleSubmit(event) {
-    event.preventDefault();
-    // TODO: Handle form submission logic
-    axios.post(
-    'https://graduactionproject-backend.onrender.com/api/v1/auth/signup',
-    { name, email, password },
-      
-      ).then(Response=>{console.log(Response.data)})
-    
-      
-      .catch(error => {
-        // handle error
-        console.log(error);
-      });
-      window.location.href='/Login';// المفروض تروح لصفحة اللجون
+  const handleSubmit = async (e)=> {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
     }
+    // TODO: Handle form submission logic
+    try{
+
+  const response = await axios.post(
+    'https://graduactionproject-backend.onrender.com/api/v1/auth/signup',
+  { name, email, password });
+
+    localStorage.setItem('token', response.data.token);
+    history.push('/dashboard');
+  } catch (error){
+    setError(error.response.data.message);
+  }
+  console.log("submitted");
+    
+  };
 
 
-
-    const [name, setname] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const handleFacebookSignup = () => {window.location.href = "https://www.facebook.com/"; }
-    const handleGoogleSignup = () => {window.location.href = "https://www.google.com/accounts";};
 
 
   return (
@@ -49,6 +56,7 @@ function SignupPage() {
             placeholder="Username"
             value={name}
             onChange={(e) => setname(e.target.value)}
+            required
           />
           <label htmlFor="email">Email:</label>
           <input
@@ -58,6 +66,7 @@ function SignupPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <label htmlFor="password">Password:</label>
           <input
@@ -67,7 +76,19 @@ function SignupPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
+
+<label htmlFor="confirmPassword">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+        {error && <p style={{color:'red',textAlign:'center'}}>{error}</p>}
           <button type="submit" className="create-account">
             Create Account
           </button>

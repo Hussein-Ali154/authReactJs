@@ -3,7 +3,9 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import SignupPage from './Components/SignupPage/SignupPage';
 import LoginPage from './Components/LoginPage/LoginPage';
 import FlightReservationForm from "./Components/reserve-page/FlightReservationForm";
-// import { HashRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import NewPassword from './Components/NewPassword/NewPassword';
+import DashboardPage from './Components/DashboardPage/DashboardPage';
 
 
 function Router() {
@@ -11,10 +13,13 @@ function Router() {
     <div>
     <HashRouter>
     <Switch> 
-      <Route exact path="/flightreservation" component={FlightReservationForm}/>
-      <Route exact path="/signup" component={SignupPage} />
-    <Route exact path="/login" component={LoginPage} />
-    <Route path="/" component={SignupPage} />
+          <Route exact path="/flightreservation" component={FlightReservationForm}/>
+          <Route exact path="/signup" component={SignupPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path='/dashboard' Component={DashboardPage}/>
+          <Route exact path="/forgot" component={ForgotPassword}/>
+          <Route exact path="/NewPass" component={NewPassword}/>
+          <Route path="/" component={SignupPage} />
     </Switch>
     </HashRouter>
     </div>
