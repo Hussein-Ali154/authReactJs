@@ -17,7 +17,7 @@ function ForgetPasswordPage() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Forgot Password</h2>
       {success ? (
         <p>A password reset email has been sent to your email address.</p>

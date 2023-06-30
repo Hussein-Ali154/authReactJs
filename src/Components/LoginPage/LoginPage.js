@@ -17,7 +17,7 @@ function LoginPage() {
       try {
         const response = await axios.post('https://graduactionproject-backend.onrender.com/api/v1/auth/login', { email, password });
         localStorage.setItem('token', response.data.token);
-        history.push('/dashboard');
+        history.push('/home');
       } catch (error) {
         setError('Invalid email or password');
       }

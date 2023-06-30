@@ -31,7 +31,7 @@ function SignupPage() {
   { name, email, password });
 
     localStorage.setItem('token', response.data.token);
-    history.push('/dashboard');
+    history.push('/home');
   } catch (error){
     setError(error.response.data.message);
   }
