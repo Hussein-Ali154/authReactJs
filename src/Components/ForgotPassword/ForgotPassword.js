@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "./ForgotPassword.css";
 
 function ForgetPasswordPage() {
   const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ function ForgetPasswordPage() {
       {success ? (
         <p>A password reset email has been sent to your email address.</p>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='forget-form'>
           <div>
             <label htmlFor="email">Email:</label>
             <input
