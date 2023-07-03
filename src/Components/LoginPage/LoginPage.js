@@ -11,14 +11,7 @@ function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
-    const userExists = existingUsers.some((user) => user.email === email);
-    if (userExists) {
-      setError('User with this email already exists');
-      return;
-    }
-    const newUser = { email, password };
-    localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
+
     fetch('https://graduactionproject-backend.onrender.com/api/v1/auth/login', {
       method: 'POST',
       headers: {
@@ -40,7 +33,12 @@ function LoginPage() {
     .catch(error => {
       // Handle error
       console.error('There was a problem with the fetch operation:', error);
-      setError('Invalid email or password');
+      if (error.message=== 'Email not found'){
+        setError('Email not found. Please Signup first.');}
+        else{
+          setError('Invalid email or Password');
+        }
+      
     });
   };
 
@@ -78,7 +76,7 @@ function LoginPage() {
         <div className="forgot-password-link">
         <Link to="/forgot">ForgetPassword</Link>
         </div>
-        {error && <p>{error}</p>}
+        {error && <p style={{color:'red',textAlign:'center'}}>{error}</p>}
         <button type="submit" className="login">Login</button>
         <div className="register-link">
         Don't have an account? <Link to ="/">Register</Link>
