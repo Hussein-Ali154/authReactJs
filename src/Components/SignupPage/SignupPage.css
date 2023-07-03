@@ -11,7 +11,7 @@
 
 .signup-form {
   width: 30%;
-  height: 91%;
+  height: 76%;
   display: block;
   flex-direction: column;
   align-items: center;
@@ -75,19 +75,7 @@
   font-size: 16px;
   cursor: pointer;
 }
-.signup-facebook {
-  background-color: #3b5998;
-  color: white;
-}
-.signup-gmail {
-  background-color: #db4437;
-  color: white;
-}
-.signup-facebook img, .signup-gmail img {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
+
 .signup-form button,.create-account:hover {
   opacity: 0.8;
 }
@@ -106,6 +94,8 @@ background-color: #0069d9;
 }
 
 .login-link {
+  margin: 0 auto;
+  padding: 10px 20px;
   font-size: 15px;
   text-align: center;
 }

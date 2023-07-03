@@ -1,42 +1,55 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./SignupPage.css";
-import facebookIcon from "./facebook-logo.svg";
-import googleIcon from "./gmail-logo.svg";
-import axios from 'axios'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 function SignupPage() {
-  const [name, setname] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error,setError]=useState(null);
   const  history = useHistory();
-  const handleFacebookSignup = () => {window.location.href = "https://www.facebook.com/"; }
-  const handleGoogleSignup = () => {window.location.href = "https://www.google.com/accounts";};
-  
-  const handleSubmit = async (e)=> {
+
+  const handleSubmit =(e)=> {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    // TODO: Handle form submission logic
-    try{
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const userExists = existingUsers.some((user) => user.email === email);
+    if (userExists) {
+      setError('User with this email already exists');
+      return;
+    }
+    const newUser = {name, email, password };
+    localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
 
-  const response = await axios.post(
-    'https://graduactionproject-backend.onrender.com/api/v1/auth/signup',
-  { name, email, password });
-
-    localStorage.setItem('token', response.data.token);
-    history.push('/home');
-  } catch (error){
-    setError(error.response.data.message);
-  }
-  console.log("submitted");
-    
+    // Make a POST request to the API endpoint with the user's email and password data
+    fetch('https://graduactionproject-backend.onrender.com/api/v1/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name, email, password })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Store the token in local storage
+      localStorage.setItem('token', data.token);
+      history.push('/dashboard');
+    })
+    .catch(error => {
+      // Handle error
+      console.error('There was a problem with the fetch operation:', error);
+    });
   };
 
 
@@ -55,7 +68,7 @@ function SignupPage() {
             name="username"
             placeholder="Username"
             value={name}
-            onChange={(e) => setname(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             required
           />
           <label htmlFor="email">Email:</label>
@@ -92,17 +105,6 @@ function SignupPage() {
           <button type="submit" className="create-account">
             Create Account
           </button>
-          <p className="p-style">OR</p>
-          <div className="signup-options">
-            <button className="signup-facebook" onClick={handleFacebookSignup}>
-              <img src={facebookIcon} alt="Facebook icon" />
-              <span>Sign up with Facebook</span>
-            </button>
-            <button className="signup-gmail" onClick={handleGoogleSignup}>
-              <img src={googleIcon} alt="Google icon" />
-              <span>Sign up with Google</span>
-            </button>
-          </div>
           <div className="login-link">
             Already have an account? <Link to="/login">Login</Link>
           </div>

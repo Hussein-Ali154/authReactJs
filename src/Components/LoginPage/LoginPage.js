@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import axios from 'axios'
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,18 +9,40 @@ function LoginPage() {
   const [error, setError]=useState(null);
   const history=useHistory();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-      
-      try {
-        const response = await axios.post('https://graduactionproject-backend.onrender.com/api/v1/auth/login', { email, password });
-        localStorage.setItem('token', response.data.token);
-        history.push('/home');
-      } catch (error) {
-        setError('Invalid email or password');
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const userExists = existingUsers.some((user) => user.email === email);
+    if (userExists) {
+      setError('User with this email already exists');
+      return;
+    }
+    const newUser = { email, password };
+    localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
+    fetch('https://graduactionproject-backend.onrender.com/api/v1/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      return response.json();
+    })
+    .then(data => {
+      // Store the token in local storage
+      localStorage.setItem('token', data.token);
+      history.push('/dashboard');
+    })
+    .catch(error => {
+      // Handle error
+      console.error('There was a problem with the fetch operation:', error);
+      setError('Invalid email or password');
+    });
+  };
 
 
   
