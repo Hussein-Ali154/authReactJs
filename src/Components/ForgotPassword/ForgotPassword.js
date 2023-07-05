@@ -1,45 +1,60 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import "./ForgotPassword.css";
 
-function ForgetPasswordPage() {
+function ForgotPassword() {
   const [email, setEmail] = useState('');
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     try {
-      await axios.post('/api/forgot-password', { email });
-      setSuccess(true);
+      const response = await fetch('https://example.com/api/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        setErrorMessage(data.error);
+      } else {
+        history.push(`/reset-password/${data.resetCode}`);
+      }
     } catch (error) {
-      setError(error.response.data.message);
+      setErrorMessage('An error occurred. Please try again later.');
     }
   };
 
   return (
-    <div className='container'>
-      <h2>Forgot Password</h2>
-      {success ? (
-        <p>A password reset email has been sent to your email address.</p>
-      ) : (
-        <form onSubmit={handleSubmit} className='forget-form'>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          {error && <p>{error}</p>}
-          <button type="submit">Submit</button>
-        </form>
-      )}
-    </div>
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <h2 className="mb-3">Forgot Password</h2>
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange} />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="mt-3">
+              Send Reset Code
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
-export default ForgetPasswordPage;
+export default ForgotPassword;

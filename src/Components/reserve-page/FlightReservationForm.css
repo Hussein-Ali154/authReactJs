@@ -1,9 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url('./background.jpg');
-  background-size: cover;
-  background-position: center;
+ 
 }
 
 
@@ -12,6 +10,9 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column; 
+  background-image: url('./back.jpg');
+  background-size: cover;
+  background-position: center;
 }
 .h1{
   margin-top: 0;

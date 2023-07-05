@@ -110,7 +110,7 @@ function SignupPage() {
           </div>
         </form>
         <div  className="login-link">
-          Want To reserve ? <Link to="/flightreservation">Reserve Your Trip</Link>
+          Want To reserve ? <Link to="/reset-code">Reserve Your Trip</Link>
         </div>
       </div>
     </div>
